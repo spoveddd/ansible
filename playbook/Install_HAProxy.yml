@@ -1,0 +1,18 @@
+---
+- name: Set up HAProxy as a load balancer
+  hosts: lb_servers
+  tasks:
+    - name: Install HAProxy
+      apt:
+        name: haproxy
+        state: present
+
+    - name: Configure HAProxy
+      template:
+        src: haproxy.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+
+    - name: Restart HAProxy
+      service:
+        name: haproxy
+        state: restarted

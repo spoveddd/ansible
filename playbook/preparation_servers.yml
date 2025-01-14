@@ -1,0 +1,15 @@
+---
+- name: Provision servers with essential packages
+  hosts: all
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install essential packages
+      apt:
+        name:
+          - vim
+          - curl
+          - git
+        state: present

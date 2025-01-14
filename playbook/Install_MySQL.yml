@@ -1,0 +1,17 @@
+---
+- name: Install and secure MySQL
+  hosts: db_servers
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Secure MySQL installation
+      mysql_secure_installation:
+        login_password: ""
+        root_password: "new_password"
+        change_root_password: yes
+        remove_anonymous_users: yes
+        disallow_root_login_remotely: yes
+        remove_test_db: yes

@@ -1,0 +1,16 @@
+---
+- name: Set up automated backups
+  hosts: all
+  vars:
+    backup_server: "backup.example.com"
+    backup_path: "/backup"
+    src_path: "/data"
+
+  tasks:
+    - name: Install rsync
+      apt:
+        name: rsync
+        state: present
+
+    - name: Sync data to backup server
+      command: "rsync -avz {{ src_path }} {{ backup_server }}:{{ backup_path }}"

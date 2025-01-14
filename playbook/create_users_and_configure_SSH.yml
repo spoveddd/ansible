@@ -1,0 +1,23 @@
+---
+- name: Create users and configure SSH access
+  hosts: all
+  vars:
+    users:
+      - username: "devops"
+        ssh_key: "ssh-rsa AAAAB3Nza..."
+      - username: "admin"
+        ssh_key: "ssh-rsa AAAAB3Nza..."
+
+  tasks:
+    - name: Create users
+      user:
+        name: "{{ item.username }}"
+        state: present
+      loop: "{{ users }}"
+
+    - name: Set up SSH authorized keys
+      authorized_key:
+        user: "{{ item.username }}"
+        key: "{{ item.ssh_key }}"
+        state: present
+      loop: "{{ users }}"
